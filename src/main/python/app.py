@@ -1,21 +1,18 @@
-import signal
-import sys
 from flask import Flask
 
 app = Flask(__name__)
 
 @app.route('/')
-def hello():
+def home():
     return "Hello, World!"
 
-# Function to handle graceful shutdown
-def shutdown_signal_handler(sig, frame):
-    print('Shutting down gracefully...')
-    # Perform any cleanup tasks here if needed
-    sys.exit(0)
-
-# Register the signal handler for SIGINT (CTRL+C)
-signal.signal(signal.SIGINT, shutdown_signal_handler)
+# Add more routes here as needed
+# For example:
+@app.route('/about')
+def about():
+    return "This is the about page."
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    from waitress import serve
+    serve(app, host='0.0.0.0', port=5000)
+
